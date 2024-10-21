@@ -1,17 +1,6 @@
 
 # 🏦 Application Bancaire Simplifiée avec Flask
 
-## 📚 Table des matières
-1. [Introduction](#introduction)
-2. [Structure de l'application](#structure-de-lapplication)
-3. [Fonctionnalités principales](#fonctionnalités-principales)
-4. [Routes et logique métier](#routes-et-logique-métier)
-5. [Gestion des sessions et sécurité](#gestion-des-sessions-et-sécurité)
-6. [Gestion des erreurs et messages flash](#gestion-des-erreurs-et-messages-flash)
-7. [Intérêts mensuels](#intérêts-mensuels)
-8. [Point d'entrée de l'application](#point-dentrée-de-lapplication)
-9. [Améliorations possibles et conclusion](#améliorations-possibles-et-conclusion)
-
 ## 🌟 Introduction
 
 Cette application est un système bancaire simplifié, créé avec Python et le framework web Flask. Elle permet aux utilisateurs de gérer des comptes bancaires, effectuer des dépôts, des retraits et des transferts, ainsi que de consulter l'historique des transactions.
@@ -27,7 +16,7 @@ Cette application est un système bancaire simplifié, créé avec Python et le 
 
 ```python
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '6a5955391897583ef1563b15bbe86fdf42a9b94d2d384e1c'
+app.config['SECRET_KEY'] = '[VOTRE_API_KEY]'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///banque.db'
 db = SQLAlchemy(app)
 ```
@@ -166,8 +155,49 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 
-## 🔧 Améliorations possibles et conclusion
 
-- Ajouter une meilleure gestion des erreurs
-- Améliorer la sécurité des PINs (actuellement en texte clair)
-- Ajouter des fonctionnalités avancées comme les virements automatiques
+## ✨ But du projet : Version adaptée avec Flask
+
+Ce projet est une adaptation Flask d'un gestionnaire de comptes bancaires simplifié, basé sur l'énoncé fourni. L'objectif est de permettre aux utilisateurs de gérer leurs comptes bancaires à travers une interface web plutôt qu'une application en ligne de commande. Grâce à Flask et SQLAlchemy, nous avons transformé la logique d'une application Python basique en un système complet, doté de fonctionnalités telles que la création de comptes, la gestion des transactions et la sécurité des comptes par code PIN.
+
+### 🚀 Fonctionnalités réalisées par rapport à l'énoncé
+
+1. **👤 Création d'un compte :**
+   - L'application permet à un utilisateur de créer un compte bancaire avec un nom, un solde initial, un taux d'intérêt et un code PIN. Cette fonctionnalité est gérée par la route `/create_account`, qui stocke le compte dans la base de données SQL pour une **persistance des données**.
+
+2. **💰 Consultation du solde :**
+   - L'utilisateur peut consulter son solde après s'être connecté via la route `/account`, où le solde actuel de son compte s'affiche, ainsi que les informations sur les taux d'intérêt.
+
+3. **📥 Dépôt d'argent :**
+   - Grâce à la route `/deposit`, l'utilisateur peut déposer de l'argent sur son compte, en ajoutant le montant au solde actuel. Les transactions sont enregistrées dans la base de données pour être consultées ultérieurement.
+
+4. **📤 Retrait d'argent :**
+   - L'utilisateur peut retirer de l'argent via la route `/withdraw`, tant que le montant est disponible sur le compte. Le solde ne peut pas devenir négatif.
+
+5. **📝 Historique des transactions :**
+   - Toutes les transactions (dépôts, retraits, transferts) sont enregistrées dans une table `Transaction`, et l'historique peut être consulté via la route `/history`. Cette historique est sauvegardée dans la base de données pour être récupérée à tout moment.
+
+6. **🔄 Menu d'options (adapté pour le web) :**
+   - Au lieu d'un menu d'options en ligne de commande, les fonctionnalités sont organisées sous forme de pages et formulaires accessibles via différentes routes : création de compte, dépôt, retrait, transfert, etc.
+
+7. **📈 Ajout d'intérêts mensuels :**
+   - Un calcul automatique des intérêts mensuels est appliqué à chaque compte via la méthode `apply_monthly_interest`, qui est déclenchée pour tous les comptes lors de l'exécution de la fonction `apply_monthly_interest_all_accounts`.
+
+8. **🏦 Possibilité de créer plusieurs comptes :**
+   - L'application supporte la création de plusieurs comptes par utilisateur. Chaque compte est associé à un nom unique et possède un solde, un taux d'intérêt et un code PIN. L'utilisateur peut gérer plusieurs comptes en se connectant via la route `/login`.
+
+9. **💸 Transfert d'argent entre comptes :**
+   - La fonctionnalité de transfert est présente via la route `/transfer`. L'utilisateur peut transférer de l'argent entre ses comptes en spécifiant un compte de destination, avec une validation par code PIN. Les transferts sont enregistrés dans la base de données pour la persistance.
+
+10. **🔍 Affichage des détails des comptes :**
+    - Les détails de chaque compte (solde, taux d'intérêt, historique des transactions) sont affichés sur la page `/account` une fois l'utilisateur connecté.
+
+11. **🔐 Sécurité avec code PIN :**
+    - Chaque compte est protégé par un code PIN que l'utilisateur doit saisir pour accéder à ses comptes. Lors de l'authentification via la route `/login`, le code PIN est vérifié pour permettre ou refuser l'accès.
+
+### 📈 Points d'amélioration possibles
+- **⚠️ Meilleure gestion des erreurs :** Une meilleure gestion des erreurs pourrait être ajoutée pour gérer les cas spécifiques comme les erreurs de connexion, les transferts invalides, etc.
+- **🔒 Sécurité accrue :** Actuellement, les PINs sont stockés en texte clair, ce qui pourrait être amélioré en les hachant avant de les stocker dans la base de données.
+- **⏲️ Automatisation des intérêts :** L'ajout automatique des intérêts pourrait être planifié pour s'exécuter à des intervalles réguliers sans nécessiter d'intervention manuelle.
+  
+En conclusion, cette version Flask de l'application "Gestionnaire de Banque Simplifié" adapte les fonctionnalités de l'énoncé pour les intégrer dans une interface web moderne et interactive, tout en maintenant les mêmes concepts de base liés à la gestion des comptes, des transactions, et de la sécurité. La persistance des données est assurée grâce à une base de données SQL.
