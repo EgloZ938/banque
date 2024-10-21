@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Bienvenue dans votre Gestionnaire de Banque</h1>
+<p>Gérez vos comptes, effectuez des transactions et suivez vos finances en toute simplicité.</p>
+{% if 'account_id' not in session %}
+<a href="{{ url_for('create_account') }}" class="btn btn-primary">Créer un compte</a>
+<a href="{{ url_for('login') }}" class="btn btn-secondary">Se connecter</a>
+{% endif %}
+{% endblock %}

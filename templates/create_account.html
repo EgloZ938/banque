@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Créer un nouveau compte</h1>
+<form method="POST">
+    <div class="form-group">
+        <label for="name">Nom du compte:</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="initial_balance">Solde initial:</label>
+        <input type="number" class="form-control" id="initial_balance" name="initial_balance" step="0.01" required>
+    </div>
+    <div class="form-group">
+        <label for="interest_rate">Taux d'intérêt (en décimal, ex: 0.01 pour 1%):</label>
+        <input type="number" class="form-control" id="interest_rate" name="interest_rate" step="0.001" required>
+    </div>
+    <div class="form-group">
+        <label for="pin">Code PIN (4 chiffres):</label>
+        <input type="password" class="form-control" id="pin" name="pin" pattern="\d{4}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Créer le compte</button>
+</form>
+{% endblock %}

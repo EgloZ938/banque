@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Mon Compte</h1>
+<h2>Bienvenue, {{ account.name }}!</h2>
+<p>Solde actuel: {{ account.balance|round(2) }}€</p>
+<p>Taux d'intérêt: {{ (account.interest_rate * 100)|round(2) }}%</p>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <a href="{{ url_for('deposit') }}" class="btn btn-success btn-block">Déposer</a>
+    </div>
+    <div class="col-md-3">
+        <a href="{{ url_for('withdraw') }}" class="btn btn-warning btn-block">Retirer</a>
+    </div>
+    <div class="col-md-3">
+        <a href="{{ url_for('transfer') }}" class="btn btn-info btn-block">Transférer</a>
+    </div>
+    <div class="col-md-3">
+        <a href="{{ url_for('history') }}" class="btn btn-secondary btn-block">Historique</a>
+    </div>
+</div>
+{% endblock %}
